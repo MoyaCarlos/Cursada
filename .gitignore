@@ -9,3 +9,4 @@ dist/
 build/
 *.spec
 .pytest_cache/
+.vscode/

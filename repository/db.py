@@ -39,4 +39,42 @@ def crear_tablas(conexion: sqlite3.Connection) -> None:
         )
         """
     )
+    conexion.execute(
+        """
+        CREATE TABLE IF NOT EXISTS estados (
+            id INTEGER PRIMARY KEY,
+            nombre TEXT NOT NULL UNIQUE
+        )
+        """
+    )
+    conexion.execute(
+        """
+        INSERT OR IGNORE INTO estados (id, nombre) VALUES
+            (1, 'pendiente'), (2, 'en_progreso'), (3, 'completada')
+        """
+    )
+    conexion.execute(
+        """
+        CREATE TABLE IF NOT EXISTS prioridades (
+            id INTEGER PRIMARY KEY,
+            nombre TEXT NOT NULL UNIQUE
+        )
+        """
+    )
+    conexion.execute(
+        """
+        INSERT OR IGNORE INTO prioridades (id, nombre) VALUES
+            (1, 'baja'), (2, 'media'), (3, 'alta')
+        """
+    )
+    conexion.execute(
+        """
+        CREATE TABLE IF NOT EXISTS tareas (
+            evento_id INTEGER PRIMARY KEY REFERENCES eventos(id),
+            descripcion TEXT NOT NULL DEFAULT '',
+            estado_id INTEGER NOT NULL REFERENCES estados(id),
+            prioridad_id INTEGER NOT NULL REFERENCES prioridades(id)
+        )
+        """
+    )
     conexion.commit()

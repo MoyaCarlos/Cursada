@@ -2,9 +2,10 @@ import tkinter as tk
 from datetime import date
 from tkinter import messagebox, ttk
 
-from domain.tarea import PrioridadTarea
+from domain.tarea import EstadoTarea, PrioridadTarea
 from repository.materia_repository import MateriaRepository
 from repository.tarea_repository import TareaRepository
+from services.cambiar_estado_tarea import CambiarEstadoTarea
 from services.crear_tarea import CrearTarea
 from services.editar_tarea import EditarTarea
 from services.eliminar_tarea import EliminarTarea
@@ -23,6 +24,7 @@ class VentanaTareas(tk.Toplevel):
         self._crear_tarea = CrearTarea(tarea_repositorio, materia_repositorio)
         self._editar_tarea = EditarTarea(tarea_repositorio, materia_repositorio)
         self._eliminar_tarea = EliminarTarea(tarea_repositorio)
+        self._cambiar_estado_tarea = CambiarEstadoTarea(tarea_repositorio)
         self._materias_listadas = []
         self._tareas_listadas = []
         self._editando_id: int | None = None
@@ -61,6 +63,17 @@ class VentanaTareas(tk.Toplevel):
 
         ttk.Button(self, text="Editar seleccionada", command=self._on_editar).pack(pady=4)
         ttk.Button(self, text="Eliminar seleccionada", command=self._on_eliminar).pack(pady=4)
+
+        estado_frame = ttk.Frame(self)
+        estado_frame.pack(pady=4)
+        self._combo_estado = ttk.Combobox(
+            estado_frame, state="readonly", values=[e.value for e in EstadoTarea]
+        )
+        self._combo_estado.set(EstadoTarea.PENDIENTE.value)
+        self._combo_estado.pack(side="left", padx=(0, 4))
+        ttk.Button(
+            estado_frame, text="Cambiar estado", command=self._on_cambiar_estado
+        ).pack(side="left")
 
         self._refrescar_materias()
         self._refrescar_listado()
@@ -151,6 +164,17 @@ class VentanaTareas(tk.Toplevel):
         self._eliminar_tarea.ejecutar(tarea.id)
         if self._editando_id == tarea.id:
             self._limpiar_formulario()
+        self._refrescar_listado()
+
+    def _on_cambiar_estado(self) -> None:
+        seleccion = self._listado.curselection()
+        if not seleccion:
+            messagebox.showinfo("Cambiar estado", "Seleccioná una tarea del listado.")
+            return
+        tarea = self._tareas_listadas[seleccion[0]]
+        self._cambiar_estado_tarea.ejecutar(
+            id=tarea.id, nuevo_estado=EstadoTarea(self._combo_estado.get())
+        )
         self._refrescar_listado()
 
     def _refrescar_listado(self) -> None:

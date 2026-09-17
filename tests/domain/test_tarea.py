@@ -2,7 +2,14 @@ from datetime import date, timedelta
 
 import pytest
 
-from domain.tarea import EstadoTarea, PrioridadTarea, Tarea, crear_tarea, editar_tarea
+from domain.tarea import (
+    EstadoTarea,
+    PrioridadTarea,
+    Tarea,
+    cambiar_estado_tarea,
+    crear_tarea,
+    editar_tarea,
+)
 
 
 def test_crear_tarea_rechaza_titulo_vacio():
@@ -90,3 +97,35 @@ def test_editar_tarea_preserva_estado():
     )
 
     assert editada.estado == EstadoTarea.EN_PROGRESO
+
+
+def test_cambiar_estado_tarea_actualiza_solo_el_estado():
+    original = Tarea(
+        materia_id=1,
+        titulo="TP1",
+        fecha_limite=date(2026, 12, 31),
+        descripcion="algo",
+        estado=EstadoTarea.PENDIENTE,
+        id=7,
+    )
+
+    cambiada = cambiar_estado_tarea(original, EstadoTarea.EN_PROGRESO)
+
+    assert cambiada.estado == EstadoTarea.EN_PROGRESO
+    assert cambiada.titulo == "TP1"
+    assert cambiada.descripcion == "algo"
+    assert cambiada.id == 7
+
+
+def test_cambiar_estado_tarea_permite_volver_a_pendiente():
+    completada = Tarea(
+        materia_id=1,
+        titulo="TP1",
+        fecha_limite=date(2026, 12, 31),
+        estado=EstadoTarea.COMPLETADA,
+        id=7,
+    )
+
+    cambiada = cambiar_estado_tarea(completada, EstadoTarea.PENDIENTE)
+
+    assert cambiada.estado == EstadoTarea.PENDIENTE

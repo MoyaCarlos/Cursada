@@ -13,8 +13,8 @@ ramas. Cada HU se especifica con Spec Kit antes de implementarse (ver
   título, descripción, fecha límite, prioridad).
 - **HU-03** ✅ (`specs/003-editar-eliminar-tarea/`): Editar/eliminar una
   tarea existente.
-- **HU-04**: Cambiar el estado de una tarea (pendiente / en progreso /
-  completada).
+- **HU-04** ✅ (`specs/004-cambiar-estado-tarea/`): Cambiar el estado de una
+  tarea (pendiente / en progreso / completada).
 - **HU-05**: Ver listado de tareas pendientes ordenado por fecha límite.
 
 ## Épica 3 — Exámenes

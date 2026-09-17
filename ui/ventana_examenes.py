@@ -1,11 +1,12 @@
 import tkinter as tk
-from datetime import date, time
+from datetime import time
 from tkinter import messagebox, ttk
 
 from domain.examen import ModalidadExamen
 from repository.examen_repository import ExamenRepository
 from repository.materia_repository import MateriaRepository
 from services.crear_examen import CrearExamen
+from ui.formato_fecha import formatear_fecha, parsear_fecha
 
 
 class VentanaExamenes(tk.Toplevel):
@@ -32,7 +33,9 @@ class VentanaExamenes(tk.Toplevel):
         self._entrada_tema = ttk.Entry(self)
         self._entrada_tema.pack(fill="x", padx=8)
 
-        ttk.Label(self, text="Fecha (AAAA-MM-DD):").pack(anchor="w", padx=8, pady=(8, 0))
+        ttk.Label(self, text="Fecha (DD/MM o DD/MM/AAAA):").pack(
+            anchor="w", padx=8, pady=(8, 0)
+        )
         self._entrada_fecha = ttk.Entry(self)
         self._entrada_fecha.pack(fill="x", padx=8)
 
@@ -74,11 +77,11 @@ class VentanaExamenes(tk.Toplevel):
             return
         materia_id = self._materias_listadas[indice].id
         try:
-            fecha = date.fromisoformat(self._entrada_fecha.get().strip())
+            fecha = parsear_fecha(self._entrada_fecha.get())
         except ValueError:
             messagebox.showerror(
                 "No se pudo crear el examen",
-                "La fecha debe tener el formato AAAA-MM-DD.",
+                "La fecha debe tener el formato DD/MM o DD/MM/AAAA.",
             )
             return
         hora_texto = self._entrada_hora.get().strip()
@@ -118,5 +121,6 @@ class VentanaExamenes(tk.Toplevel):
             self._listado.insert(
                 tk.END,
                 f"{examen.tema} - {materia_nombre} "
-                f"({examen.fecha} {examen.hora.strftime('%H:%M')}, {examen.modalidad.value})",
+                f"({formatear_fecha(examen.fecha)} {examen.hora.strftime('%H:%M')}, "
+                f"{examen.modalidad.value})",
             )

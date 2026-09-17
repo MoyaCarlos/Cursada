@@ -14,3 +14,14 @@ Característica: Gestión de materias
   Escenario: Rechazar un nombre de materia vacío
     Cuando el usuario intenta crear una materia con nombre vacío
     Entonces el sistema rechaza la creación por nombre obligatorio
+
+  Escenario: Editar el nombre de una materia
+    Dado que existe una materia llamada "Analisis Matematico"
+    Cuando el usuario edita "Analisis Matematico" para que se llame "Análisis Matemático"
+    Entonces la materia "Análisis Matemático" aparece en el listado de materias
+
+  Escenario: Rechazar la edición a un nombre usado por otra materia
+    Dado que existe una materia llamada "Redes"
+    Y que existe una materia llamada "Sistemas Operativos"
+    Cuando el usuario intenta editar "Sistemas Operativos" para que se llame "redes"
+    Entonces el sistema rechaza la edición por nombre duplicado

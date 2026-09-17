@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog, ttk
 
-from domain.materia import EventosAsociadosError, NombreDuplicadoError
+from domain.materia import EventosAsociadosError
 from repository.materia_repository import MateriaRepository
 from services.crear_materia import CrearMateria
 from services.editar_materia import EditarMateria
@@ -37,7 +37,7 @@ class VentanaMaterias(tk.Tk):
         nombre = self._entrada_nombre.get()
         try:
             self._crear_materia.ejecutar(nombre)
-        except (ValueError, NombreDuplicadoError) as error:
+        except ValueError as error:
             messagebox.showerror("No se pudo crear la materia", str(error))
             return
         self._entrada_nombre.delete(0, tk.END)
@@ -56,7 +56,7 @@ class VentanaMaterias(tk.Tk):
             return
         try:
             self._editar_materia.ejecutar(materia.id, nuevo_nombre)
-        except (ValueError, NombreDuplicadoError) as error:
+        except ValueError as error:
             messagebox.showerror("No se pudo editar la materia", str(error))
             return
         self._refrescar_listado()

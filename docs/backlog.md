@@ -11,7 +11,8 @@ ramas. Cada HU se especifica con Spec Kit antes de implementarse (ver
 ## Épica 2 — Tareas
 - **HU-02** ✅ (`specs/002-crear-tarea/`): Crear tarea pendiente (materia,
   título, descripción, fecha límite, prioridad).
-- **HU-03**: Editar/eliminar una tarea existente.
+- **HU-03** ✅ (`specs/003-editar-eliminar-tarea/`): Editar/eliminar una
+  tarea existente.
 - **HU-04**: Cambiar el estado de una tarea (pendiente / en progreso /
   completada).
 - **HU-05**: Ver listado de tareas pendientes ordenado por fecha límite.

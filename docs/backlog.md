@@ -15,7 +15,8 @@ ramas. Cada HU se especifica con Spec Kit antes de implementarse (ver
   tarea existente.
 - **HU-04** ✅ (`specs/004-cambiar-estado-tarea/`): Cambiar el estado de una
   tarea (pendiente / en progreso / completada).
-- **HU-05**: Ver listado de tareas pendientes ordenado por fecha límite.
+- **HU-05** ✅ (`specs/005-listado-tareas-por-fecha/`): Ver listado de
+  tareas pendientes ordenado por fecha límite.
 
 ## Épica 3 — Exámenes
 - **HU-06**: Crear examen (materia, tema, fecha, hora, modalidad, notas).

@@ -1,7 +1,7 @@
 from datetime import date
 
-from domain.materia import Materia
-from domain.tarea import MateriaInexistenteError, PrioridadTarea, Tarea, crear_tarea
+from domain.materia import Materia, MateriaInexistenteError
+from domain.tarea import PrioridadTarea, Tarea, crear_tarea
 from repository.materia_repository import MateriaRepository
 from repository.tarea_repository import TareaRepository
 

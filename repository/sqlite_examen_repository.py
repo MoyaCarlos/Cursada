@@ -41,6 +41,35 @@ class SqliteExamenRepository:
         filas = self._conexion.execute(f"{_SELECT_EXAMEN} ORDER BY eventos.fecha").fetchall()
         return [self._examen_desde_fila(fila) for fila in filas]
 
+    def obtener(self, id: int) -> Examen | None:
+        fila = self._conexion.execute(
+            f"{_SELECT_EXAMEN} WHERE eventos.id = ?", (id,)
+        ).fetchone()
+        return self._examen_desde_fila(fila) if fila else None
+
+    def actualizar(self, examen: Examen) -> Examen:
+        self._conexion.execute(
+            "UPDATE eventos SET materia_id = ?, titulo = ?, fecha = ?, hora = ? WHERE id = ?",
+            (
+                examen.materia_id,
+                examen.tema,
+                examen.fecha.isoformat(),
+                examen.hora.isoformat(),
+                examen.id,
+            ),
+        )
+        self._conexion.execute(
+            "UPDATE examenes SET modalidad_id = ?, notas = ? WHERE evento_id = ?",
+            (self._id_modalidad(examen.modalidad), examen.notas, examen.id),
+        )
+        self._conexion.commit()
+        return examen
+
+    def eliminar(self, id: int) -> None:
+        self._conexion.execute("DELETE FROM examenes WHERE evento_id = ?", (id,))
+        self._conexion.execute("DELETE FROM eventos WHERE id = ?", (id,))
+        self._conexion.commit()
+
     def _examen_desde_fila(self, fila) -> Examen:
         return Examen(
             id=fila[0],

@@ -1,9 +1,10 @@
 import tkinter as tk
-from tkinter import messagebox, ttk
+from tkinter import messagebox, simpledialog, ttk
 
 from domain.materia import NombreDuplicadoError
 from repository.materia_repository import MateriaRepository
 from services.crear_materia import CrearMateria
+from services.editar_materia import EditarMateria
 
 
 class VentanaMaterias(tk.Tk):
@@ -11,6 +12,8 @@ class VentanaMaterias(tk.Tk):
         super().__init__()
         self._repositorio = repositorio
         self._crear_materia = CrearMateria(repositorio)
+        self._editar_materia = EditarMateria(repositorio)
+        self._materias_listadas = []
 
         self.title("Materias")
         self.geometry("400x300")
@@ -22,6 +25,8 @@ class VentanaMaterias(tk.Tk):
 
         self._listado = tk.Listbox(self)
         self._listado.pack(fill="both", expand=True, padx=8, pady=8)
+
+        ttk.Button(self, text="Editar seleccionada", command=self._on_editar).pack(pady=4)
 
         self._refrescar_listado()
 
@@ -35,7 +40,26 @@ class VentanaMaterias(tk.Tk):
         self._entrada_nombre.delete(0, tk.END)
         self._refrescar_listado()
 
+    def _on_editar(self) -> None:
+        seleccion = self._listado.curselection()
+        if not seleccion:
+            messagebox.showinfo("Editar materia", "Seleccioná una materia del listado.")
+            return
+        materia = self._materias_listadas[seleccion[0]]
+        nuevo_nombre = simpledialog.askstring(
+            "Editar materia", "Nuevo nombre:", initialvalue=materia.nombre, parent=self
+        )
+        if nuevo_nombre is None:
+            return
+        try:
+            self._editar_materia.ejecutar(materia.id, nuevo_nombre)
+        except (ValueError, NombreDuplicadoError) as error:
+            messagebox.showerror("No se pudo editar la materia", str(error))
+            return
+        self._refrescar_listado()
+
     def _refrescar_listado(self) -> None:
+        self._materias_listadas = self._repositorio.listar()
         self._listado.delete(0, tk.END)
-        for materia in self._repositorio.listar():
+        for materia in self._materias_listadas:
             self._listado.insert(tk.END, materia.nombre)

@@ -25,3 +25,14 @@ Característica: Gestión de materias
     Y que existe una materia llamada "Sistemas Operativos"
     Cuando el usuario intenta editar "Sistemas Operativos" para que se llame "redes"
     Entonces el sistema rechaza la edición por nombre duplicado
+
+  Escenario: Eliminar una materia sin tareas ni exámenes asociados
+    Dado que existe una materia llamada "Redes"
+    Cuando el usuario elimina "Redes"
+    Entonces la materia "Redes" no aparece en el listado de materias
+
+  Escenario: Rechazar la eliminación de una materia con eventos asociados
+    Dado que existe una materia llamada "Bases de Datos"
+    Y que la materia "Bases de Datos" tiene un evento asociado
+    Cuando el usuario intenta eliminar "Bases de Datos"
+    Entonces el sistema rechaza la eliminación por tener eventos asociados

@@ -1,9 +1,10 @@
 import pytest
 from pytest_bdd import given, parsers, scenarios, then, when
 
-from domain.materia import Materia, NombreDuplicadoError
+from domain.materia import EventosAsociadosError, Materia, NombreDuplicadoError
 from services.crear_materia import CrearMateria
 from services.editar_materia import EditarMateria
+from services.eliminar_materia import EliminarMateria
 from tests.fakes import MateriaRepositoryFake
 
 scenarios("../gestion_materias.feature")
@@ -16,6 +17,7 @@ def contexto():
         "repositorio": repositorio,
         "crear": CrearMateria(repositorio),
         "editar": EditarMateria(repositorio),
+        "eliminar": EliminarMateria(repositorio),
         "error": None,
     }
 
@@ -93,3 +95,34 @@ def rechaza_por_nombre_obligatorio(contexto):
 @then("el sistema rechaza la edición por nombre duplicado")
 def rechaza_edicion_por_duplicado(contexto):
     assert isinstance(contexto["error"], NombreDuplicadoError)
+
+
+@given(parsers.parse('que la materia "{nombre}" tiene un evento asociado'))
+def materia_tiene_evento_asociado(contexto, nombre):
+    materia = _materia_por_nombre(contexto, nombre)
+    contexto["repositorio"].marcar_con_eventos(materia.id)
+
+
+@when(parsers.parse('el usuario elimina "{nombre}"'))
+def elimina_materia(contexto, nombre):
+    materia = _materia_por_nombre(contexto, nombre)
+    contexto["eliminar"].ejecutar(materia.id)
+
+
+@when(parsers.parse('el usuario intenta eliminar "{nombre}"'))
+def intenta_eliminar_materia(contexto, nombre):
+    materia = _materia_por_nombre(contexto, nombre)
+    try:
+        contexto["eliminar"].ejecutar(materia.id)
+    except EventosAsociadosError as error:
+        contexto["error"] = error
+
+
+@then(parsers.parse('la materia "{nombre}" no aparece en el listado de materias'))
+def materia_no_en_listado(contexto, nombre):
+    assert nombre not in [m.nombre for m in contexto["repositorio"].listar()]
+
+
+@then("el sistema rechaza la eliminación por tener eventos asociados")
+def rechaza_eliminacion_por_eventos(contexto):
+    assert isinstance(contexto["error"], EventosAsociadosError)

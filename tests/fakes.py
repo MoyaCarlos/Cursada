@@ -1,4 +1,5 @@
 from domain.materia import Materia
+from domain.tarea import Tarea
 
 
 class MateriaRepositoryFake:
@@ -37,3 +38,26 @@ class MateriaRepositoryFake:
     def marcar_con_eventos(self, materia_id: int) -> None:
         """Helper de test: simula que la materia tiene tareas/exámenes asociados."""
         self._materias_con_eventos.add(materia_id)
+
+
+class TareaRepositoryFake:
+    def __init__(self) -> None:
+        self._tareas: dict[int, Tarea] = {}
+        self._siguiente_id = 1
+
+    def guardar(self, tarea: Tarea) -> Tarea:
+        tarea = Tarea(
+            id=self._siguiente_id,
+            materia_id=tarea.materia_id,
+            titulo=tarea.titulo,
+            descripcion=tarea.descripcion,
+            fecha_limite=tarea.fecha_limite,
+            prioridad=tarea.prioridad,
+            estado=tarea.estado,
+        )
+        self._tareas[tarea.id] = tarea
+        self._siguiente_id += 1
+        return tarea
+
+    def listar(self) -> list[Tarea]:
+        return list(self._tareas.values())

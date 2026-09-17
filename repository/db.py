@@ -77,4 +77,27 @@ def crear_tablas(conexion: sqlite3.Connection) -> None:
         )
         """
     )
+    conexion.execute(
+        """
+        CREATE TABLE IF NOT EXISTS modalidades (
+            id INTEGER PRIMARY KEY,
+            nombre TEXT NOT NULL UNIQUE
+        )
+        """
+    )
+    conexion.execute(
+        """
+        INSERT OR IGNORE INTO modalidades (id, nombre) VALUES
+            (1, 'presencial'), (2, 'virtual')
+        """
+    )
+    conexion.execute(
+        """
+        CREATE TABLE IF NOT EXISTS examenes (
+            evento_id INTEGER PRIMARY KEY REFERENCES eventos(id),
+            modalidad_id INTEGER NOT NULL REFERENCES modalidades(id),
+            notas TEXT NOT NULL DEFAULT ''
+        )
+        """
+    )
     conexion.commit()

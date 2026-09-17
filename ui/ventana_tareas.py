@@ -96,7 +96,11 @@ class VentanaTareas(tk.Toplevel):
 
     def _refrescar_listado(self) -> None:
         self._listado.delete(0, tk.END)
+        materias_por_id = {m.id: m.nombre for m in self._materias_repo.listar()}
         for tarea in self._tareas_repo.listar():
+            materia_nombre = materias_por_id.get(tarea.materia_id, "?")
             self._listado.insert(
-                tk.END, f"[{tarea.estado.value}] {tarea.titulo} ({tarea.fecha_limite})"
+                tk.END,
+                f"[{tarea.estado.value}] {tarea.titulo} - {materia_nombre} "
+                f"({tarea.fecha_limite})",
             )

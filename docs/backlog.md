@@ -9,8 +9,8 @@ ramas. Cada HU se especifica con Spec Kit antes de implementarse (ver
   editar y eliminar materias para organizar tareas y exámenes por asignatura.
 
 ## Épica 2 — Tareas
-- **HU-02**: Crear tarea pendiente (materia, título, descripción, fecha
-  límite, prioridad).
+- **HU-02** ✅ (`specs/002-crear-tarea/`): Crear tarea pendiente (materia,
+  título, descripción, fecha límite, prioridad).
 - **HU-03**: Editar/eliminar una tarea existente.
 - **HU-04**: Cambiar el estado de una tarea (pendiente / en progreso /
   completada).

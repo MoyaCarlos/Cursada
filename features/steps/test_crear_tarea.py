@@ -4,7 +4,8 @@ import pytest
 from pytest_bdd import given, parsers, scenarios, then, when
 
 from domain.materia import Materia
-from services.crear_tarea import CrearTarea, MateriaInexistenteError
+from domain.tarea import MateriaInexistenteError
+from services.crear_tarea import CrearTarea
 from tests.fakes import MateriaRepositoryFake, TareaRepositoryFake
 
 scenarios("../crear_tarea.feature")

@@ -3,7 +3,8 @@ from datetime import date
 import pytest
 
 from domain.materia import Materia
-from services.crear_tarea import CrearTarea, MateriaInexistenteError
+from domain.tarea import MateriaInexistenteError
+from services.crear_tarea import CrearTarea
 from tests.fakes import MateriaRepositoryFake, TareaRepositoryFake
 
 

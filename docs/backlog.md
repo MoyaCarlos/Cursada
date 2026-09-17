@@ -5,8 +5,8 @@ ramas. Cada HU se especifica con Spec Kit antes de implementarse (ver
 `CLAUDE.md` → SDD).
 
 ## Épica 1 — Materias
-- **HU-01**: Como usuario quiero crear, editar y eliminar materias para
-  organizar tareas y exámenes por asignatura.
+- **HU-01** ✅ (`specs/001-gestion-materias/`): Como usuario quiero crear,
+  editar y eliminar materias para organizar tareas y exámenes por asignatura.
 
 ## Épica 2 — Tareas
 - **HU-02**: Crear tarea pendiente (materia, título, descripción, fecha

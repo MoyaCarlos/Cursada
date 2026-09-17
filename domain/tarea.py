@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date
 from enum import Enum
 
@@ -77,3 +77,7 @@ def editar_tarea(
         prioridad=prioridad,
         estado=tarea_actual.estado,
     )
+
+
+def cambiar_estado_tarea(tarea_actual: Tarea, nuevo_estado: EstadoTarea) -> Tarea:
+    return replace(tarea_actual, estado=nuevo_estado)

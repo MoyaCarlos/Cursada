@@ -75,3 +75,20 @@ docs/modelo-datos.md)
 - Los canales de notificación (HU-12, HU-14) siguen patrón Strategy: agregar
   Telegram (HU-21) a futuro no debería requerir tocar el motor de
   recordatorios, solo un nuevo adaptador.
+- **HU-14 (recibir recordatorio por email) — 2 decisiones a aplicar cuando
+  se especifique esta historia:**
+  - **Reintento sin cola FIFO real**: en vez de una cola dedicada para
+    emails pendientes por falta de internet, aprovechar que
+    `recordatorio_envios` ya registra cada intento con estado
+    "enviado"/"fallido" (ver `docs/modelo-datos.md`). El motor de
+    recordatorios, en cada corrida de polling, además de buscar
+    recordatorios nuevos reintenta los que quedaron en "fallido". Si
+    `smtplib` lanza una excepción de conexión, se marca "fallido" y el
+    siguiente ciclo reintenta solo, sin necesidad de detectar conexión a
+    internet explícitamente (poco confiable multiplataforma). Evita
+    construir infraestructura de cola dedicada (YAGNI).
+  - **Agrupar notificaciones queda fuera de HU-14**: un email por
+    recordatorio, no un resumen agrupado por materia/día/corrida. Si el
+    volumen real resulta molesto, se crea una historia nueva para el
+    agrupamiento — no se decide el criterio de antemano sin evidencia de
+    que haga falta.

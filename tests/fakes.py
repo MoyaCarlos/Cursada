@@ -61,3 +61,13 @@ class TareaRepositoryFake:
 
     def listar(self) -> list[Tarea]:
         return list(self._tareas.values())
+
+    def obtener(self, id: int) -> Tarea | None:
+        return self._tareas.get(id)
+
+    def actualizar(self, tarea: Tarea) -> Tarea:
+        self._tareas[tarea.id] = tarea
+        return tarea
+
+    def eliminar(self, id: int) -> None:
+        del self._tareas[id]

@@ -9,3 +9,12 @@ class TareaRepository(Protocol):
 
     def listar(self) -> list[Tarea]:
         """Todas las tareas existentes."""
+
+    def obtener(self, id: int) -> Tarea | None:
+        """Una tarea por id, o None si no existe."""
+
+    def actualizar(self, tarea: Tarea) -> Tarea:
+        """Actualiza una tarea existente (tarea.id no es None)."""
+
+    def eliminar(self, id: int) -> None:
+        """Elimina la tarea y su evento asociado."""

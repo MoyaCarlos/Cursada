@@ -19,7 +19,8 @@ ramas. Cada HU se especifica con Spec Kit antes de implementarse (ver
   tareas pendientes ordenado por fecha límite.
 
 ## Épica 3 — Exámenes
-- **HU-06**: Crear examen (materia, tema, fecha, hora, modalidad, notas).
+- **HU-06** ✅ (`specs/006-crear-examen/`): Crear examen (materia, tema,
+  fecha, hora, modalidad, notas).
 - **HU-07**: Editar/eliminar un examen existente.
 - **HU-08**: Ver listado de próximos exámenes ordenado por fecha.
 

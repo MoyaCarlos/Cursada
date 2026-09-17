@@ -15,6 +15,10 @@ class EventosAsociadosError(ValueError):
     pass
 
 
+class MateriaInexistenteError(ValueError):
+    pass
+
+
 def crear_materia(nombre: str) -> Materia:
     nombre_limpio = nombre.strip()
     if not nombre_limpio:

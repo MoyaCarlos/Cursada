@@ -15,10 +15,6 @@ class PrioridadTarea(Enum):
     ALTA = "alta"
 
 
-class MateriaInexistenteError(ValueError):
-    pass
-
-
 @dataclass
 class Tarea:
     materia_id: int

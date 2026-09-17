@@ -3,8 +3,8 @@ from datetime import date, timedelta
 import pytest
 from pytest_bdd import given, parsers, scenarios, then, when
 
-from domain.materia import Materia
-from domain.tarea import MateriaInexistenteError, Tarea
+from domain.materia import Materia, MateriaInexistenteError
+from domain.tarea import Tarea
 from services.editar_tarea import EditarTarea
 from services.eliminar_tarea import EliminarTarea
 from tests.fakes import MateriaRepositoryFake, TareaRepositoryFake

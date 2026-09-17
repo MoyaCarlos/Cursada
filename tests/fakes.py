@@ -1,3 +1,4 @@
+from domain.examen import Examen
 from domain.materia import Materia
 from domain.tarea import Tarea
 
@@ -71,3 +72,26 @@ class TareaRepositoryFake:
 
     def eliminar(self, id: int) -> None:
         del self._tareas[id]
+
+
+class ExamenRepositoryFake:
+    def __init__(self) -> None:
+        self._examenes: dict[int, Examen] = {}
+        self._siguiente_id = 1
+
+    def guardar(self, examen: Examen) -> Examen:
+        examen = Examen(
+            id=self._siguiente_id,
+            materia_id=examen.materia_id,
+            tema=examen.tema,
+            fecha=examen.fecha,
+            hora=examen.hora,
+            modalidad=examen.modalidad,
+            notas=examen.notas,
+        )
+        self._examenes[examen.id] = examen
+        self._siguiente_id += 1
+        return examen
+
+    def listar(self) -> list[Examen]:
+        return list(self._examenes.values())

@@ -2,8 +2,8 @@ from datetime import date
 
 import pytest
 
-from domain.materia import Materia
-from domain.tarea import MateriaInexistenteError, Tarea
+from domain.materia import Materia, MateriaInexistenteError
+from domain.tarea import Tarea
 from services.editar_tarea import EditarTarea
 from tests.fakes import MateriaRepositoryFake, TareaRepositoryFake
 

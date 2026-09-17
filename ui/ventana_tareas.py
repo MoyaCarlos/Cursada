@@ -1,5 +1,4 @@
 import tkinter as tk
-from datetime import date
 from tkinter import messagebox, ttk
 
 from domain.tarea import EstadoTarea, PrioridadTarea
@@ -9,6 +8,7 @@ from services.cambiar_estado_tarea import CambiarEstadoTarea
 from services.crear_tarea import CrearTarea
 from services.editar_tarea import EditarTarea
 from services.eliminar_tarea import EliminarTarea
+from ui.formato_fecha import formatear_fecha, parsear_fecha
 
 
 class VentanaTareas(tk.Toplevel):
@@ -44,7 +44,9 @@ class VentanaTareas(tk.Toplevel):
         self._entrada_descripcion = ttk.Entry(self)
         self._entrada_descripcion.pack(fill="x", padx=8)
 
-        ttk.Label(self, text="Fecha límite (AAAA-MM-DD):").pack(anchor="w", padx=8, pady=(8, 0))
+        ttk.Label(self, text="Fecha límite (DD/MM o DD/MM/AAAA):").pack(
+            anchor="w", padx=8, pady=(8, 0)
+        )
         self._entrada_fecha = ttk.Entry(self)
         self._entrada_fecha.pack(fill="x", padx=8)
 
@@ -102,11 +104,11 @@ class VentanaTareas(tk.Toplevel):
             return
         materia_id = self._materias_listadas[indice].id
         try:
-            fecha_limite = date.fromisoformat(self._entrada_fecha.get().strip())
+            fecha_limite = parsear_fecha(self._entrada_fecha.get())
         except ValueError:
             messagebox.showerror(
                 "No se pudo guardar la tarea",
-                "La fecha límite debe tener el formato AAAA-MM-DD.",
+                "La fecha límite debe tener el formato DD/MM o DD/MM/AAAA.",
             )
             return
         try:
@@ -148,7 +150,7 @@ class VentanaTareas(tk.Toplevel):
         self._entrada_descripcion.delete(0, tk.END)
         self._entrada_descripcion.insert(0, tarea.descripcion)
         self._entrada_fecha.delete(0, tk.END)
-        self._entrada_fecha.insert(0, tarea.fecha_limite.isoformat())
+        self._entrada_fecha.insert(0, formatear_fecha(tarea.fecha_limite))
         self._combo_prioridad.set(tarea.prioridad.value)
         self._editando_id = tarea.id
         self._boton_guardar.configure(text="Guardar cambios")
@@ -186,5 +188,5 @@ class VentanaTareas(tk.Toplevel):
             self._listado.insert(
                 tk.END,
                 f"[{tarea.estado.value}] {tarea.titulo} - {materia_nombre} "
-                f"({tarea.fecha_limite})",
+                f"({formatear_fecha(tarea.fecha_limite)})",
             )

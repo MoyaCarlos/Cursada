@@ -95,3 +95,13 @@ class ExamenRepositoryFake:
 
     def listar(self) -> list[Examen]:
         return list(self._examenes.values())
+
+    def obtener(self, id: int) -> Examen | None:
+        return self._examenes.get(id)
+
+    def actualizar(self, examen: Examen) -> Examen:
+        self._examenes[examen.id] = examen
+        return examen
+
+    def eliminar(self, id: int) -> None:
+        del self._examenes[id]

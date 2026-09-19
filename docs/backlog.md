@@ -21,7 +21,8 @@ ramas. Cada HU se especifica con Spec Kit antes de implementarse (ver
 ## Épica 3 — Exámenes
 - **HU-06** ✅ (`specs/006-crear-examen/`): Crear examen (materia, tema,
   fecha, hora, modalidad, notas).
-- **HU-07**: Editar/eliminar un examen existente.
+- **HU-07** ✅ (`specs/007-editar-eliminar-examen/`): Editar/eliminar un
+  examen existente.
 - **HU-08**: Ver listado de próximos exámenes ordenado por fecha.
 
 ## Épica 4 — Recordatorios

@@ -8,17 +8,14 @@ from services.editar_materia import EditarMateria
 from services.eliminar_materia import EliminarMateria
 
 
-class VentanaMaterias(tk.Tk):
-    def __init__(self, repositorio: MateriaRepository) -> None:
-        super().__init__()
+class PanelMaterias(ttk.Frame):
+    def __init__(self, maestro: tk.Misc, repositorio: MateriaRepository) -> None:
+        super().__init__(maestro)
         self._repositorio = repositorio
         self._crear_materia = CrearMateria(repositorio)
         self._editar_materia = EditarMateria(repositorio)
         self._eliminar_materia = EliminarMateria(repositorio)
         self._materias_listadas = []
-
-        self.title("Materias")
-        self.geometry("400x300")
 
         self._entrada_nombre = ttk.Entry(self)
         self._entrada_nombre.pack(fill="x", padx=8, pady=8)
@@ -76,6 +73,9 @@ class VentanaMaterias(tk.Tk):
         except EventosAsociadosError as error:
             messagebox.showerror("No se pudo eliminar la materia", str(error))
             return
+        self._refrescar_listado()
+
+    def actualizar(self) -> None:
         self._refrescar_listado()
 
     def _refrescar_listado(self) -> None:

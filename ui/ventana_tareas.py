@@ -11,7 +11,7 @@ from services.eliminar_tarea import EliminarTarea
 from ui.formato_fecha import formatear_fecha, parsear_fecha
 
 
-class VentanaTareas(tk.Toplevel):
+class PanelTareas(ttk.Frame):
     def __init__(
         self,
         maestro: tk.Misc,
@@ -28,9 +28,6 @@ class VentanaTareas(tk.Toplevel):
         self._materias_listadas = []
         self._tareas_listadas = []
         self._editando_id: int | None = None
-
-        self.title("Tareas")
-        self.geometry("420x480")
 
         ttk.Label(self, text="Materia:").pack(anchor="w", padx=8, pady=(8, 0))
         self._combo_materia = ttk.Combobox(self, state="readonly")
@@ -77,6 +74,10 @@ class VentanaTareas(tk.Toplevel):
             estado_frame, text="Cambiar estado", command=self._on_cambiar_estado
         ).pack(side="left")
 
+        self._refrescar_materias()
+        self._refrescar_listado()
+
+    def actualizar(self) -> None:
         self._refrescar_materias()
         self._refrescar_listado()
 

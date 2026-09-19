@@ -2,9 +2,7 @@ from repository.db import conectar, crear_tablas
 from repository.sqlite_examen_repository import SqliteExamenRepository
 from repository.sqlite_materia_repository import SqliteMateriaRepository
 from repository.sqlite_tarea_repository import SqliteTareaRepository
-from ui.ventana_examenes import VentanaExamenes
-from ui.ventana_materias import VentanaMaterias
-from ui.ventana_tareas import VentanaTareas
+from ui.ventana_principal import VentanaPrincipal
 
 
 def main() -> None:
@@ -14,9 +12,7 @@ def main() -> None:
     tarea_repositorio = SqliteTareaRepository(conexion)
     examen_repositorio = SqliteExamenRepository(conexion)
 
-    ventana = VentanaMaterias(materia_repositorio)
-    VentanaTareas(ventana, tarea_repositorio, materia_repositorio)
-    VentanaExamenes(ventana, examen_repositorio, materia_repositorio)
+    ventana = VentanaPrincipal(materia_repositorio, tarea_repositorio, examen_repositorio)
     ventana.mainloop()
 
 

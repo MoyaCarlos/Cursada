@@ -43,8 +43,8 @@ ramas. Cada HU se especifica con Spec Kit antes de implementarse (ver
   pantalla de configuración.
 
 ## Épica 6 — Interfaz
-- **HU-16**: Ventana principal con vista unificada de "próximos pendientes"
-  (tareas + exámenes por fecha).
+- **HU-16** ✅ (`specs/016-vista-unificada/`): Ventana principal con vista
+  unificada de "próximos pendientes" (tareas + exámenes por fecha).
 - **HU-17**: Ícono en la bandeja del sistema con acceso rápido (abrir
   ventana / salir).
 - **HU-22**: Filtrar el listado de pendientes por estado

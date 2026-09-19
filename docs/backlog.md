@@ -23,7 +23,8 @@ ramas. Cada HU se especifica con Spec Kit antes de implementarse (ver
   fecha, hora, modalidad, notas).
 - **HU-07** ✅ (`specs/007-editar-eliminar-examen/`): Editar/eliminar un
   examen existente.
-- **HU-08**: Ver listado de próximos exámenes ordenado por fecha.
+- **HU-08** ✅ (`specs/008-listado-examenes-por-fecha/`): Ver listado de
+  próximos exámenes ordenado por fecha.
 
 ## Épica 4 — Recordatorios
 - **HU-09**: Configurar anticipación de recordatorio al crear/editar una

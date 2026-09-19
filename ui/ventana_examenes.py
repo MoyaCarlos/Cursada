@@ -11,7 +11,7 @@ from services.eliminar_examen import EliminarExamen
 from ui.formato_fecha import formatear_fecha, parsear_fecha
 
 
-class VentanaExamenes(tk.Toplevel):
+class PanelExamenes(ttk.Frame):
     def __init__(
         self,
         maestro: tk.Misc,
@@ -27,9 +27,6 @@ class VentanaExamenes(tk.Toplevel):
         self._materias_listadas = []
         self._examenes_listados = []
         self._editando_id: int | None = None
-
-        self.title("Exámenes")
-        self.geometry("420x520")
 
         ttk.Label(self, text="Materia:").pack(anchor="w", padx=8, pady=(8, 0))
         self._combo_materia = ttk.Combobox(self, state="readonly")
@@ -68,6 +65,10 @@ class VentanaExamenes(tk.Toplevel):
         ttk.Button(self, text="Editar seleccionado", command=self._on_editar).pack(pady=4)
         ttk.Button(self, text="Eliminar seleccionado", command=self._on_eliminar).pack(pady=4)
 
+        self._refrescar_materias()
+        self._refrescar_listado()
+
+    def actualizar(self) -> None:
         self._refrescar_materias()
         self._refrescar_listado()
 
